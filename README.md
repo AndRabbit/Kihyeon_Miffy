@@ -36,11 +36,11 @@ SignUpActivity 에서 SignInActivity로 이동할 경우 SignUpActivity의 id, p
 
 ### 생명주기 로그 띄우기
 <img src="https://user-images.githubusercontent.com/59547069/114302620-ca3b7200-9b04-11eb-8cfb-3e9c6241d6a5.png" width="50%" height="50%">
-</br> 
-__안드로이드의 생명주기__ 
-</br>
+
++ __안드로이드의 생명주기__ 
+
 <img src="https://user-images.githubusercontent.com/59547069/114308215-0d560f00-9b1e-11eb-9185-873f00d9fa5a.png" width="40%" height="40%">
-</br>
+
 ------------
 ## Level 2
 

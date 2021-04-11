@@ -6,6 +6,7 @@
 
 ### 화면 전환 후 데이터를 가져오는 로직
 SignUpActivity 에서 SignInActivity로 이동할 경우 SignUpActivity의 id, pw 데이터를 SignInActivity로 넘겨줌
+- SignUpActivity에서 버튼을 누를 경우
 
 ``` Kotlin
         binding.btnSignUp.setOnClickListener{
@@ -22,7 +23,9 @@ SignUpActivity 에서 SignInActivity로 이동할 경우 SignUpActivity의 id, p
             }
         }
 ```
+- SignInActivity에서 데이터를 가져오는 부분
 
+        - registerForActivityResult를 이용한다
 ``` Kotlin
     private val signUpActivityLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -31,8 +34,6 @@ SignUpActivity 에서 SignInActivity로 이동할 경우 SignUpActivity의 id, p
         binding.etPw.setText(it.data?.getStringExtra("pw"))
     }
 ```
-
-<img src="https://user-images.githubusercontent.com/59547069/114302705-243c3780-9b05-11eb-9d81-d5f6d5d0da08.png" width="50%" height="50%">
 
 ### 생명주기 로그 띄우기
 <img src="https://user-images.githubusercontent.com/59547069/114302620-ca3b7200-9b04-11eb-8cfb-3e9c6241d6a5.png" width="50%" height="50%">

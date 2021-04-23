@@ -1,5 +1,6 @@
 package org.sopt.first
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import org.sopt.first.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding : ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -17,9 +19,23 @@ class HomeActivity : AppCompatActivity() {
 //
 //        binding.tvHomeProfileId.setText(gitid)
 //        binding.tvHomeProfileName.setText(name)
+        val repositoryListFragment = RepositoryListFragment()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.frag_home_repo, repositoryListFragment)
+        transaction.commit()
 
         Log.d("Log_Home", "onCreate")
+
+        initButtonClickEvent()
     }
+
+    private fun initButtonClickEvent(){
+        binding.btnHomeMore.setOnClickListener{
+            val intent = Intent(this, UserInfoActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
 
     override fun onStart() {
         super.onStart()

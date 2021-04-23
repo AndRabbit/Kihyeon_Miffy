@@ -26,10 +26,11 @@
 
         <ImageView
             android:id="@+id/img_home_profile"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="W,1:1"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/chunsik"
+            android:background="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -55,19 +56,46 @@
             />
 
         <ScrollView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_home_profile_name">
 
             <TextView
                 android:id="@+id/tv_home_profile_intro"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="자기소개를 하겠어요\n스크롤뷰 테스트\n\n\스크롤뷰 테스트\n\n스크롤뷰 테스트"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_homename" />
         </ScrollView>
+
+        <Button
+            android:id="@+id/btn_home_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="MORE"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_home_frag"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_profile"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline"
+        app:layout_constraintRight_toRightOf="@id/guideline2">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/frag_home_repo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Guideline

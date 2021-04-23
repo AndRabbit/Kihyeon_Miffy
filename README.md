@@ -1,7 +1,7 @@
 # 김기현 과제 2
 </br>
 
-[https://s3-us-west-2.amazonaws.com/secure.notion-static.com/13b4b432-d977-44a6-be6b-e317e6c7503e/Android_Emulator_-_Pixel_3a_API_30_x86_5554_2021-04-23_11-10-36.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/13b4b432-d977-44a6-be6b-e317e6c7503e/Android_Emulator_-_Pixel_3a_API_30_x86_5554_2021-04-23_11-10-36.mp4)
+<p align="center"><img src="https://user-images.githubusercontent.com/59547069/115892150-d8d54200-a491-11eb-8083-ac0558c2e30e.gif" width="30%" height="30%"></p>
 
 ## 📌 수행 과제
 
@@ -13,8 +13,8 @@
 # Level 1
 
 ---
+<p align="center"><img src="https://user-images.githubusercontent.com/59547069/115892020-b9d6b000-a491-11eb-9836-fe1f7c2fa901.png" width="30%" height="30%"></p>
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9e16ed51-2625-44fc-bc13-f9383cbd0057/Screenshot_1619145425.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9e16ed51-2625-44fc-bc13-f9383cbd0057/Screenshot_1619145425.png)
 
 ### ✅ **HomeActivity**
 
@@ -53,7 +53,8 @@
 
 ---
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a6b5e1d0-de10-43b7-9bfe-c0085fd2dd5e/Screenshot_1619145362.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a6b5e1d0-de10-43b7-9bfe-c0085fd2dd5e/Screenshot_1619145362.png)
+<p align="center"><img src="https://user-images.githubusercontent.com/59547069/115892046-be9b6400-a491-11eb-87b7-8ba696d77964.png" width="30%" height="30%"></p>
+
 
 ### ✅ GridLayoutManager 사용
 

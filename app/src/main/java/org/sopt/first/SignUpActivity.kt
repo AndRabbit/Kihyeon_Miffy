@@ -6,7 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import org.sopt.first.api.ServiceCreator
+import org.sopt.first.data.request.RequestJoinData
+import org.sopt.first.data.response.ResponseJoinData
 import org.sopt.first.databinding.ActivitySignUpBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding : ActivitySignUpBinding
@@ -31,12 +37,48 @@ class SignUpActivity : AppCompatActivity() {
                 Toast.makeText(this, "빈 칸이 있는지 확인해주세요", Toast.LENGTH_SHORT).show()
             }
             else{
-                val intent = Intent()
-                intent.putExtra("name", name.toString())
-                intent.putExtra("id", id.toString())
-                intent.putExtra("pw", password.toString())
-                setResult(Activity.RESULT_OK, intent)
-                finish()
+                val requestJoinData = RequestJoinData(
+                    email = binding.etSignUpId.text.toString(),
+                    password = binding.etSignUpPw.text.toString(),
+                    sex = "0",
+                    nickname = binding.etSignUpName.text.toString(),
+                    phone = "010",
+                    birth = "1111"
+                )
+
+                val call: Call<ResponseJoinData> = ServiceCreator.soptService
+                    .postJoin(requestJoinData)
+
+                call.enqueue(object : Callback<ResponseJoinData> {
+                    override fun onResponse(
+                        call: Call<ResponseJoinData>,
+                        response: Response<ResponseJoinData>
+                    ) {
+                        if(response.isSuccessful){
+                            val data = response.body()?.data
+                            Toast.makeText(this@SignUpActivity, data?.nickname+"님 가입을 환영합니다.", Toast.LENGTH_SHORT)
+                                .show()
+                            startSignInActivity()
+                        } else{
+                            // 여긴 서버 통신 status가 200~300이 아닌 경우
+                            Toast.makeText(this@SignUpActivity, "다시 시도해주세요."+response.code(), Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
+
+                    private fun startSignInActivity(){
+                        val intent = Intent()
+                        intent.putExtra("name", name.toString())
+                        intent.putExtra("id", id.toString())
+                        intent.putExtra("pw", password.toString())
+                        setResult(Activity.RESULT_OK, intent)
+                        finish()
+                    }
+
+                    override fun onFailure(call: Call<ResponseJoinData>, t: Throwable) {
+                        Log.d("NetworkTest", "error:$t")
+                    }
+                })
             }
         }
     }

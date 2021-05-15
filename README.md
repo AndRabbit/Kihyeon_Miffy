@@ -1,7 +1,6 @@
 # 김기현 과제 4
 </br>
 
-[https://s3-us-west-2.amazonaws.com/secure.notion-static.com/13b4b432-d977-44a6-be6b-e317e6c7503e/Android_Emulator_-_Pixel_3a_API_30_x86_5554_2021-04-23_11-10-36.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/13b4b432-d977-44a6-be6b-e317e6c7503e/Android_Emulator_-_Pixel_3a_API_30_x86_5554_2021-04-23_11-10-36.mp4)
 
 ## 📌 수행 과제
 
@@ -9,9 +8,7 @@
 
 # Level 1
 
----
-
-[https://s3-us-west-2.amazonaws.com/secure.notion-static.com/32a792dd-43e7-4377-97d1-c16e5e8ddd82/_2021_05_11_23_40_01_339.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/32a792dd-43e7-4377-97d1-c16e5e8ddd82/_2021_05_11_23_40_01_339.mp4)
+<img src="https://user-images.githubusercontent.com/59547069/118366439-35cc9f80-b5db-11eb-98ce-2b3ba5683b4c.gif" width="40%" height="40%">
 
 ### ✅ 로그인, 회원가입 통신 구현하기
 
@@ -33,14 +30,13 @@ fun postJoin(
 - RequestData 클래스에서 서버 요청을 위해 보내는 데이터 관리
 - ResponseData 클래스에서 서버 응답 데이터를 관리
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a9374051-3aa7-4940-a138-3c82024d6d2a/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a9374051-3aa7-4940-a138-3c82024d6d2a/Untitled.png)
+<img src="https://user-images.githubusercontent.com/59547069/118366441-36653600-b5db-11eb-9c2f-c49006a7c356.png" width="30%" height="30%">
 
 ### ✅ PostMan 테스트 사진
 
 - 회원가입 테스트
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9135389b-51f1-48d7-837a-1528554420f4/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9135389b-51f1-48d7-837a-1528554420f4/Untitled.png)
+<img src="https://user-images.githubusercontent.com/59547069/118366435-349b7280-b5db-11eb-9418-965374d0beb3.png" width="50%" height="50%">
 
 - 로그인 테스트
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6ce4ec19-29ac-4986-add0-4c97f6bbb922/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6ce4ec19-29ac-4986-add0-4c97f6bbb922/Untitled.png)
+<img src="https://user-images.githubusercontent.com/59547069/118366438-35340900-b5db-11eb-9985-3641cd6e3500.png" width="80%" height="80%">

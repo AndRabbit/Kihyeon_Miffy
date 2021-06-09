@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import org.sopt.first.databinding.ActivityHomeBinding
+import org.sopt.first.data.SoptUserAuthStorage
+import org.sopt.first.utils.showToast
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding : ActivityHomeBinding
@@ -33,6 +35,14 @@ class HomeActivity : AppCompatActivity() {
         binding.btnHomeMore.setOnClickListener{
             val intent = Intent(this, UserInfoActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.btnLogout.setOnClickListener{
+            SoptUserAuthStorage.clearAuthStorage(this)
+            val intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
+            finish()
+            showToast("로그아웃 되었습니다.")
         }
     }
 

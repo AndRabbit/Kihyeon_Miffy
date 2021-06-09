@@ -48,6 +48,7 @@ class SignInActivity : AppCompatActivity() {
         }
         else {
             startHomeActivity()
+            showToast("자동 로그인 되었습니다.")
         }
     }
 
@@ -103,6 +104,7 @@ class SignInActivity : AppCompatActivity() {
                         }
 
                         startHomeActivity()
+                        showToast("안녕하세요")
                     } else{
                         // 여긴 서버 통신 status가 200~300이 아닌 경우
 //                        Toast.makeText(this@SignInActivity, "아이디와 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT)
@@ -129,7 +131,7 @@ class SignInActivity : AppCompatActivity() {
     private fun startHomeActivity(){
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
-        showToast("안녕하세요")
+//        showToast("안녕하세요")
         finish()
     }
 

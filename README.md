@@ -1,7 +1,5 @@
-# 김기현 과제 4
+# 김기현 과제 7
 </br>
-
-[https://s3-us-west-2.amazonaws.com/secure.notion-static.com/13b4b432-d977-44a6-be6b-e317e6c7503e/Android_Emulator_-_Pixel_3a_API_30_x86_5554_2021-04-23_11-10-36.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/13b4b432-d977-44a6-be6b-e317e6c7503e/Android_Emulator_-_Pixel_3a_API_30_x86_5554_2021-04-23_11-10-36.mp4)
 
 ## 📌 수행 과제
 
@@ -10,37 +8,98 @@
 # Level 1
 
 ---
+<p align="center"><img src="https://user-images.githubusercontent.com/59547069/121373153-cea3d000-c979-11eb-94a5-d17b22668d67.gif" width="30%" height="30%"></p>
+### ✅ 자동 로그인 구현하기
 
-[https://s3-us-west-2.amazonaws.com/secure.notion-static.com/32a792dd-43e7-4377-97d1-c16e5e8ddd82/_2021_05_11_23_40_01_339.mp4](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/32a792dd-43e7-4377-97d1-c16e5e8ddd82/_2021_05_11_23_40_01_339.mp4)
-
-### ✅ 로그인, 회원가입 통신 구현하기
-
-- 로그인 / 회원가입 API를 참고하여  구현
-- 서버에 post를 보내는 함수 구현 ( postLogin(), postJoin() )
+- 처음 로그인을 할 때 성공했다면 SharedPreference에 ID와 PW를 저장한다.
 
 ```kotlin
-@POST("/login/signin")
-fun postLogin(
-    @Body body: RequestLoginData
-) : Call<ResponseLoginData>
+**SignInActivity.kt**
+// SharedPreference에 ID와 PW가 있는지 찾는 코드
+// 만약 없다면 SharedPreference에 ID와 PW를 저장한다.
+private fun searchUserAuthStorage(){
+        if ( !SoptUserAuthStorage.hasUserData(this) ){
+            with(binding){
+                SoptUserAuthStorage.saveUserId(this@SignInActivity, etId.text.toString())
+                SoptUserAuthStorage.saveUserPw(this@SignInActivity, etPw.text.toString())
+            }
+        }
+        else {
+            startHomeActivity()
+        }
+    }
 
-@POST("/login/signup")
-fun postJoin(
-    @Body body: RequestJoinData
-) : Call<ResponseJoinData>
+**SoptUserAuthStorage.kt**
+fun saveUserId(context: Context, id: String){
+        val sharedPreferences = context.getSharedPreferences(
+            "${context.packageName}.$STORAGE_KEY",
+            Context.MODE_PRIVATE
+        )
+        sharedPreferences.edit()
+            .putString(USER_ID, id)
+            .apply()
+    }
+
+    fun saveUserPw(context: Context, pw: String){
+        val sharedPreferences = context.getSharedPreferences(
+            "${context.packageName}.$STORAGE_KEY",
+            Context.MODE_PRIVATE
+        )
+        sharedPreferences.edit()
+            .putString(USER_PW, pw)
+            .apply()
+    }
 ```
 
-- RequestData 클래스에서 서버 요청을 위해 보내는 데이터 관리
-- ResponseData 클래스에서 서버 응답 데이터를 관리
+- 이후 로그인을 할 때 SharedPreference에 ID와 PW가 있다면 로그인 과정을 건너뛰고 HomeActivity로 이동한다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a9374051-3aa7-4940-a138-3c82024d6d2a/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a9374051-3aa7-4940-a138-3c82024d6d2a/Untitled.png)
+```kotlin
+**SignInActivity.kt**
+// SharedPreference에 ID와 PW가 있는지 찾는 코드
+// 만약 있다면 바로 HomeActivity로 이동한다.
+private fun searchUserAuthStorage(){
+        if ( !SoptUserAuthStorage.hasUserData(this) ){
+            with(binding){
+                SoptUserAuthStorage.saveUserId(this@SignInActivity, etId.text.toString())
+                SoptUserAuthStorage.saveUserPw(this@SignInActivity, etPw.text.toString())
+            }
+        }
+        else {
+            startHomeActivity()
+        }
+    }
 
-### ✅ PostMan 테스트 사진
+**SoptUserAuthStorage.kt**
+fun hasUserData(context: Context) : Boolean {
+        val sharedPreferences = context.getSharedPreferences(
+            "${context.packageName}.$STORAGE_KEY",
+            Context.MODE_PRIVATE
+        )
+        return !sharedPreferences.getString(USER_ID, "").isNullOrBlank() &&
+                !sharedPreferences.getString(USER_PW, "").isNullOrBlank()
+    }
+```
 
-- 회원가입 테스트
+- 서비스에서 로그아웃 버튼을 클릭하면 SharedPreference를 clear하고 SignInActivity로 이동한다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9135389b-51f1-48d7-837a-1528554420f4/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9135389b-51f1-48d7-837a-1528554420f4/Untitled.png)
+```kotlin
+**HomeActivity.kt**
+// 로그아웃 버튼을 누르면 SharedPreference의 모든 값을 지워줌
+binding.btnLogout.setOnClickListener{
+            SoptUserAuthStorage.clearAuthStorage(this)
+            val intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
-- 로그인 테스트
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6ce4ec19-29ac-4986-add0-4c97f6bbb922/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6ce4ec19-29ac-4986-add0-4c97f6bbb922/Untitled.png)
+**SoptUserAuthStorage.kt**
+fun clearAuthStorage(context: Context) {
+        val sharedPreferences = context.getSharedPreferences(
+            "${context.packageName}.$STORAGE_KEY",
+            Context.MODE_PRIVATE
+        )
+        sharedPreferences.edit()
+            .clear()
+            .apply()
+    }
+```

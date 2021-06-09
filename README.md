@@ -103,3 +103,70 @@ fun clearAuthStorage(context: Context) {
             .apply()
     }
 ```
+
+# Level 2
+
+---
+
+### ✅ 확장 함수 사용하기
+
+- 서버와 연결하고 Response를 받아오는 부분을 확장 함수로 구현
+- SignInActivity에서 로그인을 시도할 때 사용
+- SignUpActivity에서 회원가입을 시도할 때 사용
+
+```kotlin
+**SignInActivity.kt**
+call.enqueueResponseUtil(
+                onSuccess = { response ->
+                    val data = response.data
+
+                    showToast(data?.user_nickname.toString())
+                    if (!SoptUserAuthStorage.hasUserData(this@SignInActivity)){
+                        SoptUserAuthStorage.saveUserId(this@SignInActivity, requestLoginData.email)
+                        SoptUserAuthStorage.saveUserPw(this@SignInActivity, requestLoginData.password)
+                    }
+
+                    startHomeActivity()
+                    showToast("안녕하세요")
+                } ,
+                onError = {
+                    // 여긴 서버 통신 status가 200~300이 아닌 경우
+                    showToast("아이디와 비밀번호가 틀렸습니다.")
+                }
+
+            )
+
+**SignUpActivity.kt**
+call.enqueueResponseUtil(
+                    onSuccess = { response ->
+                        val data = response.data
+                        showToast(data?.nickname+"님 가입을 환영합니다.")
+                        startSignInActivity()
+                    } ,
+                    onError = {
+                        // 여긴 서버 통신 status가 200~300이 아닌 경우
+                        showToast("다시 시도해주세요.")
+                    }
+
+                )
+
+**Util/EnqueueResponseUtil.kt**
+fun <ResponseType> Call<ResponseType>.enqueueResponseUtil(
+    onSuccess: (ResponseType) -> Unit,
+    onError: ((stateCode: Int) -> Unit)? = null
+) {
+    this.enqueue(object : Callback<ResponseType> {
+        override fun onResponse(call: Call<ResponseType>, response: Response<ResponseType>) {
+            if (response.isSuccessful) {
+                onSuccess.invoke(response.body() ?: return)
+            } else {
+                onError?.invoke(response.code()?: return)
+            }
+        }
+
+        override fun onFailure(call: Call<ResponseType>, t: Throwable) {
+            Log.d("NetworkTest", "error:$t")
+        }
+    })
+}
+```

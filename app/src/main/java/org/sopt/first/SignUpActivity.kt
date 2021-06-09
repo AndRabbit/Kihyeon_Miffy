@@ -7,9 +7,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import org.sopt.first.api.ServiceCreator
+import org.sopt.first.data.SoptUserAuthStorage
 import org.sopt.first.data.request.RequestJoinData
 import org.sopt.first.data.response.ResponseJoinData
 import org.sopt.first.databinding.ActivitySignUpBinding
+import org.sopt.first.utils.enqueueResponseUtil
+import org.sopt.first.utils.showToast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,36 +52,49 @@ class SignUpActivity : AppCompatActivity() {
                 val call: Call<ResponseJoinData> = ServiceCreator.soptService
                     .postJoin(requestJoinData)
 
-                call.enqueue(object : Callback<ResponseJoinData> {
-                    override fun onResponse(
-                        call: Call<ResponseJoinData>,
-                        response: Response<ResponseJoinData>
-                    ) {
-                        if(response.isSuccessful){
-                            val data = response.body()?.data
-                            Toast.makeText(this@SignUpActivity, data?.nickname+"님 가입을 환영합니다.", Toast.LENGTH_SHORT)
-                                .show()
-                            startSignInActivity()
-                        } else{
-                            // 여긴 서버 통신 status가 200~300이 아닌 경우
-                            Toast.makeText(this@SignUpActivity, "다시 시도해주세요."+response.code(), Toast.LENGTH_SHORT)
-                                .show()
-                        }
+                fun startSignInActivity(){
+                    val intent = Intent()
+                    intent.putExtra("name", name.toString())
+                    intent.putExtra("id", id.toString())
+                    intent.putExtra("pw", password.toString())
+                    setResult(Activity.RESULT_OK, intent)
+                    finish()
+                }
+
+                call.enqueueResponseUtil(
+                    onSuccess = { response ->
+                        val data = response.data
+                        showToast(data?.nickname+"님 가입을 환영합니다.")
+                        startSignInActivity()
+                    } ,
+                    onError = {
+                        // 여긴 서버 통신 status가 200~300이 아닌 경우
+                        showToast("다시 시도해주세요.")
                     }
 
-                    private fun startSignInActivity(){
-                        val intent = Intent()
-                        intent.putExtra("name", name.toString())
-                        intent.putExtra("id", id.toString())
-                        intent.putExtra("pw", password.toString())
-                        setResult(Activity.RESULT_OK, intent)
-                        finish()
-                    }
+                )
 
-                    override fun onFailure(call: Call<ResponseJoinData>, t: Throwable) {
-                        Log.d("NetworkTest", "error:$t")
-                    }
-                })
+//                call.enqueue(object : Callback<ResponseJoinData> {
+//                    override fun onResponse(
+//                        call: Call<ResponseJoinData>,
+//                        response: Response<ResponseJoinData>
+//                    ) {
+//                        if(response.isSuccessful){
+//                            val data = response.body()?.data
+//                            Toast.makeText(this@SignUpActivity, data?.nickname+"님 가입을 환영합니다.", Toast.LENGTH_SHORT)
+//                                .show()
+//                            startSignInActivity()
+//                        } else{
+//                            // 여긴 서버 통신 status가 200~300이 아닌 경우
+//                            Toast.makeText(this@SignUpActivity, "다시 시도해주세요."+response.code(), Toast.LENGTH_SHORT)
+//                                .show()
+//                        }
+//                    }
+
+//                    override fun onFailure(call: Call<ResponseJoinData>, t: Throwable) {
+//                        Log.d("NetworkTest", "error:$t")
+//                    }
+//                })
             }
         }
     }

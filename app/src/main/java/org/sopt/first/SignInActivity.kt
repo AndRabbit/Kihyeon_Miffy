@@ -12,6 +12,7 @@ import org.sopt.first.data.SoptUserAuthStorage
 import org.sopt.first.data.request.RequestLoginData
 import org.sopt.first.data.response.ResponseLoginData
 import org.sopt.first.databinding.ActivitySignInBinding
+import org.sopt.first.utils.enqueueResponseUtil
 import org.sopt.first.utils.showToast
 import retrofit2.Call
 import retrofit2.Callback
@@ -86,37 +87,55 @@ class SignInActivity : AppCompatActivity() {
 
             val call: Call<ResponseLoginData> = ServiceCreator.soptService
                 .postLogin(requestLoginData)
+            call.enqueueResponseUtil(
+                onSuccess = { response ->
+                    val data = response.data
 
-            call.enqueue(object : Callback<ResponseLoginData>{
-                override fun onResponse(
-                    call: Call<ResponseLoginData>,
-                    response: Response<ResponseLoginData>
-                ) {
-                    if(response.isSuccessful){
-                        val data = response.body()?.data
-//                        Toast.makeText(this@SignInActivity, data?.user_nickname, Toast.LENGTH_SHORT)
-//                            .show()
-                        showToast(data?.user_nickname.toString())
-
-                        if (!SoptUserAuthStorage.hasUserData(this@SignInActivity)){
-                            SoptUserAuthStorage.saveUserId(this@SignInActivity, requestLoginData.email)
-                            SoptUserAuthStorage.saveUserPw(this@SignInActivity, requestLoginData.password)
-                        }
-
-                        startHomeActivity()
-                        showToast("안녕하세요")
-                    } else{
-                        // 여긴 서버 통신 status가 200~300이 아닌 경우
-//                        Toast.makeText(this@SignInActivity, "아이디와 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT)
-//                            .show()
-                        showToast("아이디와 비밀번호가 틀렸습니다.")
+                    showToast(data?.user_nickname.toString())
+                    if (!SoptUserAuthStorage.hasUserData(this@SignInActivity)){
+                        SoptUserAuthStorage.saveUserId(this@SignInActivity, requestLoginData.email)
+                        SoptUserAuthStorage.saveUserPw(this@SignInActivity, requestLoginData.password)
                     }
+
+                    startHomeActivity()
+                    showToast("안녕하세요")
+                } ,
+                onError = {
+                    // 여긴 서버 통신 status가 200~300이 아닌 경우
+                    showToast("아이디와 비밀번호가 틀렸습니다.")
                 }
 
-                override fun onFailure(call: Call<ResponseLoginData>, t: Throwable) {
-                    Log.d("NetworkTest", "error:$t")
-                }
-            })
+            )
+//            call.enqueue(object : Callback<ResponseLoginData>{
+//                override fun onResponse(
+//                    call: Call<ResponseLoginData>,
+//                    response: Response<ResponseLoginData>
+//                ) {
+//                    if(response.isSuccessful){
+//                        val data = response.body()?.data
+////                        Toast.makeText(this@SignInActivity, data?.user_nickname, Toast.LENGTH_SHORT)
+////                            .show()
+//                        showToast(data?.user_nickname.toString())
+//
+//                        if (!SoptUserAuthStorage.hasUserData(this@SignInActivity)){
+//                            SoptUserAuthStorage.saveUserId(this@SignInActivity, requestLoginData.email)
+//                            SoptUserAuthStorage.saveUserPw(this@SignInActivity, requestLoginData.password)
+//                        }
+//
+//                        startHomeActivity()
+//                        showToast("안녕하세요")
+//                    } else{
+//                        // 여긴 서버 통신 status가 200~300이 아닌 경우
+////                        Toast.makeText(this@SignInActivity, "아이디와 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT)
+////                            .show()
+//                        showToast("아이디와 비밀번호가 틀렸습니다.")
+//                    }
+//                }
+
+//                override fun onFailure(call: Call<ResponseLoginData>, t: Throwable) {
+//                    Log.d("NetworkTest", "error:$t")
+//                }
+//            })
 
         }
     }

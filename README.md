@@ -9,6 +9,7 @@
 
 ---
 <p align="center"><img src="https://user-images.githubusercontent.com/59547069/121373153-cea3d000-c979-11eb-94a5-d17b22668d67.gif" width="30%" height="30%"></p>
+
 ### ✅ 자동 로그인 구현하기
 
 - 처음 로그인을 할 때 성공했다면 SharedPreference에 ID와 PW를 저장한다.

@@ -4,6 +4,7 @@
 ## 📌 수행 과제
 
 - level 1
+- level 2
 
 # Level 1
 
@@ -12,7 +13,7 @@
 
 ### ✅ 자동 로그인 구현하기
 
-- 처음 로그인을 할 때 성공했다면 SharedPreference에 ID와 PW를 저장한다.
+#### - 처음 로그인을 할 때 성공했다면 SharedPreference에 ID와 PW를 저장한다.
 
 ```kotlin
 **SignInActivity.kt**
@@ -52,7 +53,7 @@ fun saveUserId(context: Context, id: String){
     }
 ```
 
-- 이후 로그인을 할 때 SharedPreference에 ID와 PW가 있다면 로그인 과정을 건너뛰고 HomeActivity로 이동한다.
+#### - 이후 로그인을 할 때 SharedPreference에 ID와 PW가 있다면 로그인 과정을 건너뛰고 HomeActivity로 이동한다.
 
 ```kotlin
 **SignInActivity.kt**
@@ -81,7 +82,7 @@ fun hasUserData(context: Context) : Boolean {
     }
 ```
 
-- 서비스에서 로그아웃 버튼을 클릭하면 SharedPreference를 clear하고 SignInActivity로 이동한다.
+#### - 서비스에서 로그아웃 버튼을 클릭하면 SharedPreference를 clear하고 SignInActivity로 이동한다.
 
 ```kotlin
 **HomeActivity.kt**
@@ -112,9 +113,9 @@ fun clearAuthStorage(context: Context) {
 
 ### ✅ 확장 함수 사용하기
 
-- 서버와 연결하고 Response를 받아오는 부분을 확장 함수로 구현
-- SignInActivity에서 로그인을 시도할 때 사용
-- SignUpActivity에서 회원가입을 시도할 때 사용
+#### - 서버와 연결하고 Response를 받아오는 부분을 확장 함수로 구현
+#### - SignInActivity에서 로그인을 시도할 때 사용
+#### - SignUpActivity에서 회원가입을 시도할 때 사용
 
 ```kotlin
 **SignInActivity.kt**

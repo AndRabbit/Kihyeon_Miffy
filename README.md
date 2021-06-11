@@ -49,6 +49,8 @@
 - HomeActivity에서 기능 추가
 - 클릭 시 FollowingListFragment를 가진 UserInfoActivity를 띄움
 
+</br>
+
 # Level 2
 
 ---
@@ -186,3 +188,27 @@ if (layout_type == 1){
 
 }
 ```
+
+</br>
+
+# Level 3
+
+---
+
+### ✅ notifyDataSetChanged
+
+📌 **notifyDataSetChanged**
+
+- 어댑터에 연결된 List의 데이터를 갱신한다.
+- 하지만 바뀌지 않은 item이 많더라도 전부 다 업데이트하게 된다.
+- 이렇게 불필요한 교체 비용을 줄이기 위해 고안된 것이 바로 **DiffUtil**이다.
+
+📌 **DiffUtil**
+
+- 교체가 필요한 아이템에 대해서 부분적으로 데이터를 교체하라는 notify가 실행된다.
+- item의 개수가 많을 경우 연산 시간이 길어질 수 있고, 구현상의 제약으로 DiffUtil이 처리할 수 있는 리스트의 최대 크기는 2²⁶이다.
+
+📌 **ListAdapter**
+
+- DiffUtil을 활용하여 리스트를 업데이트할 수 있는 기능을 추가한 Adapter
+- 기존 어댑터와 달리 DiffUtil 기능에 대한 콜백 기능 클래스만 구현하면 되므로 생산성, 효율성을 높일 수 있음
